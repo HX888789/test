@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!--    设置jdbc连接数据文件-->
+    <properties resource="db.properties"/>
+<!--    设置别名-->
+    <typeAliases>
+        <package name="com.myweb.crm.settings.domain"/>
+    </typeAliases>
+<!--    连接jdbc-->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+<!--    声明mapper文件-->
+<!--    方式一  使用人esource方式指定mapper映射文件
+        方式二  使用class属性 找到dao层接口的全路径
+        -->
+    <mappers>
+        <package name="com.myweb.crm.settings.dao"/>
+    </mappers>
+</configuration>
