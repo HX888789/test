@@ -11,10 +11,20 @@
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>com.myweb.crm.web.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
     <display-name>crm</display-name>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
+<!--    声明用户控制器-->
     <servlet>
         <servlet-name>UserController</servlet-name>
         <servlet-class>com.myweb.crm.settings.web.controller.UserController</servlet-class>
@@ -22,5 +32,15 @@
     <servlet-mapping>
         <servlet-name>UserController</servlet-name>
         <url-pattern>/settings/user/login.do</url-pattern>
+    </servlet-mapping>
+<!--    声明市场活动控制器-->
+    <servlet>
+        <servlet-name>ActivityController</servlet-name>
+        <servlet-class>com.myweb.crm.workbench.web.controller.ActivityController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ActivityController</servlet-name>
+        <url-pattern>/workbench/activity/getUserList.do</url-pattern>
+        <url-pattern>/workbench/activity/save.do</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -8,6 +8,7 @@
 <!--    设置别名-->
     <typeAliases>
         <package name="com.myweb.crm.settings.domain"/>
+        <package name="com.myweb.crm.workbench.domain"/>
     </typeAliases>
 <!--    连接jdbc-->
     <environments default="development">
@@ -27,5 +28,6 @@
         -->
     <mappers>
         <package name="com.myweb.crm.settings.dao"/>
+        <package name="com.myweb.crm.workbench.dao"/>
     </mappers>
 </configuration>

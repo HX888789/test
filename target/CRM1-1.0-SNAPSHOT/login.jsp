@@ -16,6 +16,9 @@ String basePath = request.getScheme() + "://" +
 <script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
 	<script>
 		$(function (){
+			if(window.top!=window){
+				window.top.location=window.location;
+			}
 		//	页面加载完毕后 将用户文本框中的内容清空
 			$("#loginAct").val("");
 			$("#loginPwd").val("");

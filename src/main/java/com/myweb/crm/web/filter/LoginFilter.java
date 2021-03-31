@@ -17,6 +17,13 @@ public class LoginFilter implements Filter {
         System.out.println("进入到过滤器 验证是否登录");
         HttpServletRequest req= (HttpServletRequest) servletRequest;
         HttpServletResponse resq= (HttpServletResponse) servletResponse;
+//      拿到当前路径  让登录页面和登录方法放行
+        String path=req.getServletPath();
+
+        if("/login.jsp".equals(path)||"/settings/user/login.do".equals(path)){
+            filterChain.doFilter(servletRequest,servletResponse);
+        }
+        else {
 //        验证用户是否登录 就是判断session是否有对象
          if(req.getSession().getAttribute("user")!=null){
              filterChain.doFilter(servletRequest,servletResponse);
@@ -28,6 +35,7 @@ public class LoginFilter implements Filter {
 //             ${pageContext.request.contextPath} 这是获取项目名
              resq.sendRedirect(req.getContextPath()+"/login.jsp");
          }
+    }
     }
 
     @Override
