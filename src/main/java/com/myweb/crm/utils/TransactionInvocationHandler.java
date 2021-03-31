@@ -21,7 +21,9 @@ public class TransactionInvocationHandler implements InvocationHandler {
             session.commit();
         }catch (Exception e){
             session.rollback();
+//            向上给controller抛异常 处理的什么异常 抛的就是什么异常
             e.printStackTrace();
+            throw e.getCause();
         }finally {
             SqlSessionUtil.Myclose(session);
         }
