@@ -14,7 +14,7 @@ public class UserController extends HttpServlet {
         if("/settings/user/login.do".equals(path)){
             System.out.println("开始登录");
 
-        }else if("/settings/user/xxx.do".equals(path)){
+        }else if("/settings/user/.do".equals(path)){
 
         }
     }
