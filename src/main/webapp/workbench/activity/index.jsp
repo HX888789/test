@@ -22,8 +22,8 @@ request.getContextPath() + "/";
 <script type="text/javascript">
 <%--为创建按钮绑定操作 打开添加的模态窗口--%>
 	$(function(){
+	    $("#qx").prop("checked",false);
 		$("#addBtn").click(function (){
-			$("#qx").prop("checked",false);
 			$(".time").datetimepicker({
 				minView: "month",
 				language:  'zh-CN',
