@@ -81,7 +81,7 @@ request.getContextPath() + "/";
 					if(data.success){
 					//	清空之前填写的信息 jquery没有提供reset方法 我们需要转化为原生js的dom对象
 					// 	jQuery对象转化为dom对象 jquery对象[下标]
-					//	dom转jquery ${dom}
+					<%--	dom转jquery ${dom}--%>
                        $("#activityAddForm")[0].reset();
 					//	添加成功后 刷新市场活动信息列表(局部刷新)
 
@@ -90,13 +90,57 @@ request.getContextPath() + "/";
 					}else{
 						alert("添加市场活动失败");
 					}
-
 				}
 			})
 		})
-		
+        pageList(1,2);
+		$("#search-Btn").click(function (){
+            pageList(1,2);
+        })
+	//	为全选的复选框绑定事件，触发全选操作
+		$("#qx").click(function (){
+			$("input[name=xz]").prop("checked",this.checked);
+		})
+	//	动态生成的元素 我们要以on方法来触发事件
+	// 	语法：$(需要绑定元素的有效外层元素).on(绑定的事件，需要绑定的元素的jquery对象，回调函数)
+		$("#activityBody").on("click",$("input[name=xz]"),function (){
+			// 比较全部打勾的数量和选择打勾的数量
+			$("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
+		})
 	});
-	
+
+//	做分页必须要有的参数 pageNO:页码 pageSize:每页展示的条数
+	function pageList(pageNo,pageSize){
+	    $.ajax({
+            url:"workbench/activity/pageList.do",
+            data:{
+                "pageNo":pageNo,
+                "pageSize":pageSize,
+                "owner": $.trim($("#search-owner").val()),
+                "name": $.trim($("#search-name").val()),
+                "startDate": $.trim($("#search-startDate").val()),
+                "endDate": $.trim($("#search-endDate").val())
+            },
+            type:"get",
+            dataType:"json",
+            success:function (data){
+
+            //    需要市场活动列表     分页插件需要的查询出来的总记录数
+                var html="";
+                $.each(data.dataList,function (i,n){
+                   html +=' <tr class="active">'
+                   html +='<td><input type="checkbox" name="xz" value="'+n.id+'" /></td>'
+                   html +='<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.jsp\';">'+n.name+'</a></td>'
+                   html +='<td>'+n.owner+'</td>'
+                   html +='<td>'+n.startDate+'</td>'
+                   html +='<td>'+n.endDate+'</td>'
+                   html +='</tr>'
+                })
+				$("#activityBody").html(html);
+
+            }
+        })
+    }
 </script>
 </head>
 <body>
@@ -249,14 +293,14 @@ request.getContextPath() + "/";
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">名称</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" type="text" id="search-name">
 				    </div>
 				  </div>
 				  
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">所有者</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" type="text" id="search-owner">
 				    </div>
 				  </div>
 
@@ -264,17 +308,17 @@ request.getContextPath() + "/";
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">开始日期</div>
-					  <input class="form-control" type="text" id="startTime" />
+					  <input class="form-control" type="text" id="search-startDate" />
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">结束日期</div>
-					  <input class="form-control" type="text" id="endTime">
+					  <input class="form-control" type="text" id="search-endDate">
 				    </div>
 				  </div>
 				  
-				  <button type="submit" class="btn btn-default">查询</button>
+				  <button type="button" id="search-Btn" class="btn btn-default">查询</button>
 				  
 				</form>
 			</div>
@@ -296,28 +340,28 @@ request.getContextPath() + "/";
 				<table class="table table-hover">
 					<thead>
 						<tr style="color: #B3B3B3;">
-							<td><input type="checkbox" /></td>
+							<td><input type="checkbox" id="qx"/></td>
 							<td>名称</td>
                             <td>所有者</td>
 							<td>开始日期</td>
 							<td>结束日期</td>
 						</tr>
 					</thead>
-					<tbody>
-						<tr class="active">
-							<td><input type="checkbox" /></td>
-							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/activity/detail.jsp';">发传单</a></td>
-                            <td>zhangsan</td>
-							<td>2020-10-10</td>
-							<td>2020-10-20</td>
-						</tr>
-                        <tr class="active">
-                            <td><input type="checkbox" /></td>
-                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/activity/detail.jsp';">发传单</a></td>
-                            <td>zhangsan</td>
-                            <td>2020-10-10</td>
-                            <td>2020-10-20</td>
-                        </tr>
+					<tbody id="activityBody">
+<%--						<tr class="active">--%>
+<%--							<td><input type="checkbox" /></td>--%>
+<%--							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/activity/detail.jsp';">发传单</a></td>--%>
+<%--                            <td>zhangsan</td>--%>
+<%--							<td>2020-10-10</td>--%>
+<%--							<td>2020-10-20</td>--%>
+<%--						</tr>--%>
+<%--                        <tr class="active">--%>
+<%--                            <td><input type="checkbox" /></td>--%>
+<%--                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/activity/detail.jsp';">发传单</a></td>--%>
+<%--                            <td>zhangsan</td>--%>
+<%--                            <td>2020-10-10</td>--%>
+<%--                            <td>2020-10-20</td>--%>
+<%--                        </tr>--%>
 					</tbody>
 				</table>
 			</div>
