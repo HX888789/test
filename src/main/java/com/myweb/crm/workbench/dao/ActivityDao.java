@@ -1,6 +1,7 @@
 package com.myweb.crm.workbench.dao;
 
 import com.myweb.crm.workbench.domain.Activity;
+import com.myweb.crm.workbench.domain.ActivityRemark;
 
 import java.util.List;
 import java.util.Map;
@@ -18,4 +19,6 @@ public interface ActivityDao {
     Activity getById(String id);
 
     int update(Activity a);
+
+    Activity detail(String id);
 }

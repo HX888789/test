@@ -22,8 +22,8 @@ request.getContextPath() + "/";
 <script type="text/javascript">
 <%--为创建按钮绑定操作 打开添加的模态窗口--%>
 	$(function(){
+	    $("#qx").prop("checked",false);
 		$("#addBtn").click(function (){
-			$("#qx").prop("checked",false);
 			$(".time").datetimepicker({
 				minView: "month",
 				language:  'zh-CN',
@@ -239,7 +239,7 @@ request.getContextPath() + "/";
                 $.each(data.dataList,function (i,n){
                    html +=' <tr class="active">'
                    html +='<td><input type="checkbox" name="xz" value="'+n.id+'" /></td>'
-                   html +='<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.jsp\';">'+n.name+'</a></td>'
+                   html +='<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.do?id='+n.id+'\';">'+n.name+'</a></td>'
                    html +='<td>'+n.owner+'</td>'
                    html +='<td>'+n.startDate+'</td>'
                    html +='<td>'+n.endDate+'</td>'

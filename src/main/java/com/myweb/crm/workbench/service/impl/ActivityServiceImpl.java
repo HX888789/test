@@ -7,6 +7,7 @@ import com.myweb.crm.vo.PaginationVo;
 import com.myweb.crm.workbench.dao.ActivityDao;
 import com.myweb.crm.workbench.dao.ActivityRemarkDao;
 import com.myweb.crm.workbench.domain.Activity;
+import com.myweb.crm.workbench.domain.ActivityRemark;
 import com.myweb.crm.workbench.service.ActivityService;
 
 import java.util.HashMap;
@@ -85,4 +86,50 @@ public class ActivityServiceImpl implements ActivityService {
         }
         return flag;
     }
-}
+
+    @Override
+    public Activity detail(String id) {
+        Activity a=activityDao.detail(id);
+        return a;
+    }
+
+    @Override
+    public List<ActivityRemark> getRemarkListByAid(String id) {
+        List<ActivityRemark> ar=activityRemarkDao.getRemarkListByAid(id);
+        return ar;
+    }
+
+    @Override
+    public boolean deleteRemark(String id) {
+        boolean flag=true;
+        int count=activityRemarkDao.deleteRemark(id);
+        if(count!=1){
+            flag=false;
+        }
+
+        return  flag;
+    }
+
+    @Override
+    public boolean saveRemark(ActivityRemark ar) {
+        boolean flag=true;
+        int count =activityRemarkDao.saveRemark(ar);
+        if(count!=1)
+        {
+            flag=false;
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean undateRemark(ActivityRemark ar) {
+        boolean flag=true;
+        int count =activityRemarkDao.undateRemark(ar);
+        if(count!=1)
+        {
+            flag=false;
+        }
+        return flag;
+    }
+    }
+
